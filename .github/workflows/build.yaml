@@ -90,10 +90,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
           docker images
+
+          export SESSION_ID=$( oci bastion session create-port-forwarding --bastion-id "ocid1.bastion.oc1.uk-london-1.amaaaaaatwfhi7yan2s3sdth7yjcw4hpa3o32uebmrlideeocv5xl2lajknq" --display-name activetunnel211 --ssh-public-key-file ~/.ssh/id_rsa.pub --key-type PUB --target-private-ip 10.0.1.224 --target-port 6443  | jq '.data.id')
+          echo $SESSION_ID
           
           ssh-keyscan -H host.bastion.uk-london-1.oci.oraclecloud.com >> ~/.ssh/known_hosts
           
-          ssh -fN -i ~/.ssh/id_rsa -L 6443:10.0.1.224:6443 ocid1.bastionsession.oc1.uk-london-1.amaaaaaatwfhi7yalhijwktepvbvmo3le3dq2h5peulj7dhxare4lp4gni5q@host.bastion.uk-london-1.oci.oraclecloud.com
+          ssh -fN -i ~/.ssh/id_rsa -L 6443:10.0.1.224:6443 echo $SESSION_ID@host.bastion.uk-london-1.oci.oraclecloud.com
           kubectl version
 
           kubectl set image deployment/django-k8s-web-deployment django-k8s-web=lhr.ocir.io/idhkis4m3p5e/django-sample-app-k8s:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
