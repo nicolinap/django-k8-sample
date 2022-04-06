@@ -106,7 +106,7 @@ jobs:
           
           ssh-keyscan -H host.bastion.uk-london-1.oci.oraclecloud.com >> ~/.ssh/known_hosts
           
-          ssh -fN -i ~/.ssh/id_rsa -L 6443:10.0.1.224:6443 ocid1.bastionsession.oc1.uk-london-1.amaaaaaatwfhi7ya4ttxyh2bnv6bqaqhzxyya4xblmhx3gsxesqxzgzqucza@host.bastion.uk-london-1.oci.oraclecloud.com
+          ssh -fN -i ~/.ssh/id_rsa -L 6443:10.0.1.224:6443 ocid1.bastionsession.oc1.uk-london-1.amaaaaaatwfhi7yalhijwktepvbvmo3le3dq2h5peulj7dhxare4lp4gni5q@host.bastion.uk-london-1.oci.oraclecloud.com
           kubectl version
 
           kubectl set image deployment/django-k8s-web-deployment django-k8s-web=lhr.ocir.io/idhkis4m3p5e/django-sample-app-k8s:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
