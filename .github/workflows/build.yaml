@@ -7,7 +7,7 @@ on:
 
 jobs:
   test_job:
-    uses: nicolinap/django-copy/.github/workflows/test.yaml@master
+    uses: nicolinap/django-k8-sample/.github/workflows/test.yaml@master
   build:
     runs-on: ubuntu-latest
     needs: [test_job]
