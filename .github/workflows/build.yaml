@@ -91,8 +91,8 @@ jobs:
 
           docker images
 
-          export SESSION_ID=$( oci bastion session create-port-forwarding --bastion-id "ocid1.bastion.oc1.uk-london-1.amaaaaaatwfhi7yan2s3sdth7yjcw4hpa3o32uebmrlideeocv5xl2lajknq" --display-name activetunnel211 --ssh-public-key-file ~/.ssh/id_rsa.pub --key-type PUB --target-private-ip 10.0.1.224 --target-port 6443  | jq '.data.id')
-          echo $SESSION_ID
+          export SESSION_ID=$( oci bastion session create-port-forwarding --bastion-id "ocid1.bastion.oc1.uk-london-1.amaaaaaatwfhi7yan2s3sdth7yjcw4hpa3o32uebmrlideeocv5xl2lajknq" --display-name activetunnel211 --ssh-public-key-file ~/.ssh/id_rsa.pub --key-type PUB --target-private-ip 10.0.1.224 --target-port 6443  | jq '.data.id') | tr -d '"'
+          echo $SESSION_ID 
           
           ssh-keyscan -H host.bastion.uk-london-1.oci.oraclecloud.com >> ~/.ssh/known_hosts
           
