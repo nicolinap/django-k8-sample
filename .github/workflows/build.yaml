@@ -11,19 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [test_job]
-    env:
-      DJANGO_SUPERUSER_USERNAME: dalquint
-      DJANGO_SUPERUSER_PASSWORD: d3nny4lqu1nTa
-      DJANGO_SUPERUSER_EMAIL: dralquinta@gmail.com
-      DJANGO_SECRET_KEY: _j&s*g&icq!a&vc8-y5zlhn-r!)o+jjoz(8zx=zyjws2mckk2c
-
-      MYSQL_READY: 1
-      MYSQL_DB: django
-      MYSQL_USER: root
-      MYSQL_PASSWORD: W3lcome!
-      MYSQL_HOST: 10.0.1.99
-      MYSQL_PORT: 3306
-      MYSQL_ROOT_PASSWORD: W3lcome!
     steps:
       - name: Checkout code
         uses: actions/checkout@master
@@ -32,18 +19,18 @@ jobs:
       - name: Build container image
         working-directory: ./web
         env: 
-          DJANGO_SUPERUSER_USERNAME: ${{ env.DJANGO_SUPERUSER_USERNAME }}
-          DJANGO_SUPERUSER_PASSWORD: ${{ env.DJANGO_SUPERUSER_PASSWORD }}
-          DJANGO_SUPERUSER_EMAIL: ${{ env.DJANGO_SUPERUSER_EMAIL }}
-          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
+          DJANGO_SUPERUSER_USERNAME: ${{ secrets.DJANGO_SUPERUSER_USERNAME }}
+          DJANGO_SUPERUSER_PASSWORD: ${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
+          DJANGO_SUPERUSER_EMAIL: ${{ secrets.DJANGO_SUPERUSER_EMAIL }}
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
 
-          MYSQL_READY: ${{ env.MYSQL_READY }}
-          MYSQL_DB: ${{ env.MYSQL_DB }}
-          MYSQL_USER: ${{ env.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
-          MYSQL_HOST: ${{ env.MYSQL_HOST }}
-          MYSQL_PORT: ${{ env.MYSQL_PORT }}
-          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_ROOT_PASSWORD }}
+          MYSQL_READY: ${{ secrets.MYSQL_READY }}
+          MYSQL_DB: ${{ secrets.MYSQL_DB }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: |
 
           touch .env
