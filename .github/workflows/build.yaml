@@ -28,7 +28,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Login to OCIR 
-        run:  echo ${{ secrets.OCIR_PASS }} | docker login -u ${{ secrets.OCIR_LOGIN }} --password-stdin lhr.ocir.io
+        run: echo ${{ secrets.OCIR_PASS }} | docker login -u ${{ secrets.OCIR_LOGIN }} --password-stdin lhr.ocir.io
       - name: Build container image
         working-directory: ./web
         env: 
