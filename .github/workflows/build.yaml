@@ -87,7 +87,9 @@ jobs:
         run: |
 
           echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.ID_RSA_PUB }}" > ~/.ssh/id_rsa.pub
           chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
 
           docker images
 
@@ -113,3 +115,5 @@ jobs:
           kubectl exec -it $SINGLE_POD_NAME -- sh /app/migrate.sh
 
           kubectl get pods
+
+          oci bastion session delete --session-id $SESSION_ID
