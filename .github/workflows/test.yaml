@@ -14,20 +14,16 @@ jobs:
       mysql_main:
         image: mysql:oracle
         env:
-          MYSQL_DB: ${{ secrets.MYSQL_DB }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DB: django
+          MYSQL_USER: npieri
+          MYSQL_PASSWORD: W3lcome!
+          MYSQL_HOST: 10.0.2.70
+          MYSQL_PORT: 3306
+          MYSQL_ROOT_PASSWORD: W3lcome!
 
         ports:
           - 3306:3306
-        options: >-
-          --health-cmd healthcheck.sh
-          --health-interval 20s
-          --health-timeout 10s
-          --health-retries 10
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
 
     strategy:
       max-parallel: 4
