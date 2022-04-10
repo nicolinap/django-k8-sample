@@ -95,25 +95,6 @@ jobs:
 
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
 
-      # - name: Update deployment secrets
-      #   run: |
-      #     cat << EOF >> web/.env.prod
-      #     DJANGO_SUPERUSER_USERNAME: ${{ secrets.DJANGO_SUPERUSER_USERNAME }}
-      #     DJANGO_SUPERUSER_PASSWORD: ${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-      #     DJANGO_SUPERUSER_EMAIL: ${{ secrets.DJANGO_SUPERUSER_EMAIL }}
-      #     DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-      #     MYSQL_READY: ${{ secrets.MYSQL_READY }}
-      #     MYSQL_DB: ${{ secrets.MYSQL_DB }}
-      #     MYSQL_USER: ${{ secrets.MYSQL_USER }}
-      #     MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-      #     MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-      #     MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-      #     MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-      #     EOF
-
-      #     kubectl delete secret django-k8s-web-prod-env
-      #     kubectl create secret generic django-k8s-web-prod-env --from-env-file=web/.env.prod
-
       - name: Rollout Deployment
         run: |
 
