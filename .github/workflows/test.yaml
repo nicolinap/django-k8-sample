@@ -15,6 +15,7 @@ jobs:
       mysql_main:
         image: mysql:oracle
         env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           MYSQL_DB: ${{ secrets.MYSQL_DB }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
