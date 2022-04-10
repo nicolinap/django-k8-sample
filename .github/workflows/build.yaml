@@ -81,9 +81,26 @@ jobs:
 
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
 
+      - name: Update deployment secrets
+        run: |
+          cat << EOF >> web/.env.prod
+          DJANGO_SUPERUSER_USERNAME: ${{ secrets.DJANGO_SUPERUSER_USERNAME }}
+          DJANGO_SUPERUSER_PASSWORD: ${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
+          DJANGO_SUPERUSER_EMAIL: ${{ secrets.DJANGO_SUPERUSER_EMAIL }}
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          MYSQL_READY: ${{ secrets.MYSQL_READY }}
+          MYSQL_DB: ${{ secrets.MYSQL_DB }}
+          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          EOF
 
-      - name: Test
-        id: bastion
+          kubectl delete secret django-k8s-web-prod-env
+          kubectl create secret generic django-k8s-web-prod-env --from-env-file=web/.env.prod
+
+      - name: Rollout Deployment
         run: |
 
           echo "${{ secrets.ID_RSA }}" > ~/.ssh/id_rsa
@@ -93,16 +110,19 @@ jobs:
 
           docker images
 
+          # Create a bastion session to connect to the cluster
           export SESSION_ID=$( oci bastion session create-port-forwarding --bastion-id "ocid1.bastion.oc1.uk-london-1.amaaaaaatwfhi7yan2s3sdth7yjcw4hpa3o32uebmrlideeocv5xl2lajknq" --display-name activetunnel --ssh-public-key-file ~/.ssh/id_rsa.pub --key-type PUB --target-private-ip 10.0.1.224 --target-port 6443  | jq '.data.id')
           SESSION_ID=`sed -e 's/^"//' -e 's/"$//' <<<"$SESSION_ID"`
           echo $SESSION_ID
 
+          # Add the bastion to github known hosts file
           ssh-keyscan -H host.bastion.uk-london-1.oci.oraclecloud.com >> ~/.ssh/known_hosts
           
           sleep 30s
           ssh -fN -i ~/.ssh/id_rsa -L 6443:10.0.1.224:6443 $SESSION_ID@host.bastion.uk-london-1.oci.oraclecloud.com
           kubectl version
 
+          # Set the image as the one tagged with this commit SHA (the image can also be set to the image tagged as 'latest')
           kubectl set image deployment/django-k8s-web-deployment django-k8s-web=lhr.ocir.io/idhkis4m3p5e/django-sample-app-k8s:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
           
           kubectl get deployments
@@ -110,6 +130,7 @@ jobs:
           kubectl rollout restart deployment/django-k8s-web-deployment
           kubectl rollout status deployment/django-k8s-web-deployment
 
+          # Migrate database
           sleep 1m
           export SINGLE_POD_NAME=$(kubectl get pod -l app=django-k8s-web-deployment -o jsonpath="{.items[1].metadata.name}")
           kubectl wait --for=condition=ready pod/$SINGLE_POD_NAME --timeout=90s
@@ -117,4 +138,5 @@ jobs:
 
           kubectl get pods
 
+          # Close bastion session
           oci bastion session delete --session-id $SESSION_ID --force
