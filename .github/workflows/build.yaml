@@ -11,19 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [test_job]
-    env:
-      DJANGO_SUPERUSER_USERNAME: dalquint
-      DJANGO_SUPERUSER_PASSWORD: d3nny4lqu1nTa
-      DJANGO_SUPERUSER_EMAIL: dralquinta@gmail.com
-      DJANGO_SECRET_KEY: _j&s*g&icq!a&vc8-y5zlhn-r!)o+jjoz(8zx=zyjws2mckk2c
-
-      MYSQL_READY: 1
-      MYSQL_DB: django
-      MYSQL_USER: root
-      MYSQL_PASSWORD: W3lcome!
-      MYSQL_HOST: 10.0.1.99
-      MYSQL_PORT: 3306
-      MYSQL_ROOT_PASSWORD: W3lcome!
     steps:
       - name: Checkout code
         uses: actions/checkout@master
