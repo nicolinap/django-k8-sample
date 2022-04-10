@@ -11,7 +11,7 @@ jobs:
       run:
         working-directory: ./web
     env:
-      DJANGO_SECRET_KEY: _j&s*g&icq!a&vc8-y5zlhn-r!)o+jjoz(8zx=zyjws2mckk2c
+      DJANGO_SECRET_KEY: test-key
       MYSQL_DB: django
       MYSQL_USER: npieri
       MYSQL_PASSWORD: W3lcome!
