@@ -11,6 +11,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [test_job]
+    env:
+      DJANGO_SUPERUSER_USERNAME: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      DJANGO_SUPERUSER_PASSWORD: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      DJANGO_SUPERUSER_EMAIL: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      DJANGO_SECRET_KEY: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+
+      MYSQL_READY: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      MYSQL_DB: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      MYSQL_USER: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      MYSQL_PASSWORD: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      MYSQL_HOST: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      MYSQL_PORT: ${{ env.DJANGO_SUPERUSER_USERNAME }}
+      MYSQL_ROOT_PASSWORD: ${{ env.DJANGO_SUPERUSER_USERNAME }}
     steps:
       - name: Checkout code
         uses: actions/checkout@master
