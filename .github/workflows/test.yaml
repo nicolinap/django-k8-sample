@@ -11,7 +11,7 @@ jobs:
       run:
         working-directory: ./web
     env:
-      DJANGO_SECRET_KEY: test-key
+      DJANGO_SECRET_KEY: _j&s*g&icq!a&vc8-y5zlhn-r!)o+jjoz(8zx=zyjws2mckk2c
       MYSQL_DB: django
       MYSQL_USER: npieri
       MYSQL_PASSWORD: W3lcome!
@@ -31,7 +31,7 @@ jobs:
 
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        # options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     strategy:
       max-parallel: 4
