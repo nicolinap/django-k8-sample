@@ -13,7 +13,7 @@ jobs:
     env:
       DJANGO_SECRET_KEY: _j&s*g&icq!a&vc8-y5zlhn-r!)o+jjoz(8zx=zyjws2mckk2c
       MYSQL_DB: django
-      MYSQL_USER: root
+      MYSQL_USER: npieri
       MYSQL_PASSWORD: W3lcome!
       MYSQL_HOST: 10.0.2.70
       MYSQL_PORT: 3306

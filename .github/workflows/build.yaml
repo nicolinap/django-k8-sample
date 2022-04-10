@@ -19,9 +19,9 @@ jobs:
 
       MYSQL_READY: 1
       MYSQL_DB: django
-      MYSQL_USER: root
+      MYSQL_USER: npieri
       MYSQL_PASSWORD: W3lcome!
-      MYSQL_HOST: 10.0.1.99
+      MYSQL_HOST: 10.0.2.70
       MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: W3lcome!
     steps:
@@ -122,5 +122,5 @@ jobs:
           kubectl exec -it $SINGLE_POD_NAME -- sh /app/migrate.sh
 
           kubectl get pods
-          
+
           
