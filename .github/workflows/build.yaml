@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    needs: ./test.yaml
+    needs: ./.github/workflows/test
     steps:
       - name: Checkout code
         uses: actions/checkout@master
