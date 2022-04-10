@@ -26,3 +26,4 @@ jobs:
       MYSQL_ROOT_PASSWORD: W3lcome!
     steps:
       - name: Checkout code
+        uses: actions/checkout@master
