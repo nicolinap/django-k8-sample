@@ -172,3 +172,4 @@ jobs:
           kubectl get pods
 
           oci bastion session delete --session-id $SESSION_ID --force
+          
