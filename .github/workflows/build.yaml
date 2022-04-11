@@ -155,7 +155,9 @@ jobs:
           sleep 1m
           export SINGLE_POD_NAME=$(kubectl get pod -l app=django-k8s-web-deployment -o jsonpath="{.items[1].metadata.name}")
           kubectl wait --for=condition=ready pod/$SINGLE_POD_NAME --timeout=90s
+          
           kubectl exec -it $SINGLE_POD_NAME -- sh /app/migrate.sh
+          kubectl exec -it $SINGLE_POD_NAME -- sh /app/collectstatic.sh
 
           kubectl get pods
 
